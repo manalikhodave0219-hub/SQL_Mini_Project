@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Retail SQL Analysis</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>Retail SQL Analysis</h1>
+    <p>SQL Mini Project | PostgreSQL</p>
+</header>
+
+<div class="container">
+
+    <section class="card">
+        <h2>Project Overview</h2>
+
+        <p>
+            This SQL Mini Project analyzes retail sales data using PostgreSQL.
+            The project uses Orders, Customers and Products tables to analyze
+            sales performance, regions, categories, products and customers.
+        </p>
+    </section>
+
+
+    <section class="card">
+        <h2>Tables Used</h2>
+
+        <ul>
+            <li>Orders</li>
+            <li>Customers</li>
+            <li>Products</li>
+        </ul>
+    </section>
+
+
+    <section class="card">
+        <h2>SQL Analysis</h2>
+
+        <h3>1. Main JOIN Analysis</h3>
+
+        <pre>
+SELECT
+    o.orderid,
+    o.orderdate,
+    c.customername,
+    c.region,
+    p.productname,
+    p.category,
+    o.quantity,
+    o.sales
+FROM Orders o
+INNER JOIN Customers c
+ON o.customerid = c.customerid
+INNER JOIN Products p
+ON o.productid = p.productid;
+        </pre>
+
+        <p class="use">
+            <b>Use:</b> Combines Orders, Customers and Products tables
+            for complete retail sales analysis.
+        </p>
+
+
+        <h3>2. KPI Analysis</h3>
+
+        <pre>
+SELECT
+    SUM(sales) AS TotalSales,
+    COUNT(orderid) AS TotalOrders,
+    AVG(sales) AS AverageOrderValue,
+    MAX(sales) AS HighestOrderValue
+FROM Orders;
+        </pre>
+
+        <p class="use">
+            <b>Use:</b> Calculates Total Sales, Total Orders,
+            Average Order Value and Highest Order Value.
+        </p>
+
+
+        <h3>3. Sales by Region and Category</h3>
+
+        <pre>
+SELECT
+    c.region,
+    p.category,
+    SUM(o.sales) AS TotalSales
+FROM Orders o
+INNER JOIN Customers c
+ON o.customerid = c.customerid
+INNER JOIN Products p
+ON o.productid = p.productid
+GROUP BY c.region, p.category
+ORDER BY TotalSales DESC;
+        </pre>
+
+        <p class="use">
+            <b>Use:</b> Analyzes total sales by region and product category.
+        </p>
+
+
+        <h3>4. Monthly Sales</h3>
+
+        <pre>
+SELECT
+    DATE_TRUNC('month', orderdate) AS Month,
+    SUM(sales) AS TotalSales
+FROM Orders
+GROUP BY DATE_TRUNC('month', orderdate)
+ORDER BY Month;
+        </pre>
+
+        <p class="use">
+            <b>Use:</b> Analyzes monthly sales trends.
+        </p>
+
+
+        <h3>5. Top 5 Products</h3>
+
+        <pre>
+SELECT
+    p.productname,
+    SUM(o.sales) AS TotalSales
+FROM Orders o
+INNER JOIN Products p
+ON o.productid = p.productid
+GROUP BY p.productname
+ORDER BY TotalSales DESC
+LIMIT 5;
+        </pre>
+
+        <p class="use">
+            <b>Use:</b> Identifies the top 5 products based on total sales.
+        </p>
+
+
+        <h3>6. Top 5 Customers</h3>
+
+        <pre>
+SELECT
+    c.customername,
+    SUM(o.sales) AS TotalSales
+FROM Orders o
+INNER JOIN Customers c
+ON o.customerid = c.customerid
+GROUP BY c.customername
+ORDER BY TotalSales DESC
+LIMIT 5;
+        </pre>
+
+        <p class="use">
+            <b>Use:</b> Identifies the top 5 customers based on total sales.
+        </p>
+
+    </section>
+
+
+    <section class="card">
+        <h2>SQL Output Screenshots</h2>
+
+        <div class="screenshot">
+            <h3>Output 1</h3>
+            <img src="Output1.png" alt="SQL Output 1">
+        </div>
+
+        <div class="screenshot">
+            <h3>Output 2</h3>
+            <img src="Output2.png" alt="SQL Output 2">
+        </div>
+
+        <div class="screenshot">
+            <h3>Output 3</h3>
+            <img src="Output3.png" alt="SQL Output 3">
+        </div>
+
+        <div class="screenshot">
+            <h3>Output 4</h3>
+            <img src="Output4.png" alt="SQL Output 4">
+        </div>
+
+        <div class="screenshot">
+            <h3>Output 5</h3>
+            <img src="Output5.png" alt="SQL Output 5">
+        </div>
+
+        <div class="screenshot">
+            <h3>Output 6</h3>
+            <img src="Output6.png" alt="SQL Output 6">
+        </div>
+
+    </section>
+
+
+    <section class="card">
+        <h2>Business Insights</h2>
+
+        <ol>
+            <li>Overall sales performance can be measured using total sales and total orders.</li>
+            <li>Regional analysis helps identify regions generating higher sales.</li>
+            <li>Category analysis helps compare product category performance.</li>
+            <li>Top product analysis identifies products generating the highest sales.</li>
+            <li>Monthly sales analysis helps understand sales trends over time.</li>
+        </ol>
+    </section>
+
+</div>
+
+
+<footer>
+    <p>Retail SQL Analysis | SQL Mini Project</p>
+</footer>
+
+</body>
+</html>
